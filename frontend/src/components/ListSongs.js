@@ -6,7 +6,7 @@ how you manage this functionality). */
 import React from 'react';
 import Song from './Song'; // Assuming you have a Song component to display individual songs
 
-const ListSongs = ({ songs, currentUser }) => {
+const ListSongs = ({ songs = [], currentUser }) => {
     // Filter songs to only include those added by the current user
     const userSongs = songs.filter(song => song.addedBy === currentUser.id);
 

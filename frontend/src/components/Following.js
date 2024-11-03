@@ -6,7 +6,7 @@ each) */
 import React from 'react';
 import PreviewProfile from './PreviewProfile'; // Assuming you have a ProfilePreview component
 
-const Following = ({ following }) => {
+const Following = ({ following = [] }) => {
     return (
         <div className="following-list">
             <h3>Following</h3>

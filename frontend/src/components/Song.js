@@ -1,83 +1,63 @@
 //Song Component (contains all required information on a single song)
 import React from 'react';
-import AddToPlaylist from './AddToPlaylist'; 
-import AddSongToFavourites from './AddSongToFavourites'; 
 
 class Song extends React.Component {
     constructor(props) {
         super(props);
+
+        // Initial state with an `isDeleted` flag
         this.state = {
             isDeleted: false,
-            showMenu: false,
-            showDataPopup: false
+            timestamp: new Date().toISOString() // Automatically set the timestamp when the component is created
         };
 
-        // Bind functions to this
-        this.toggleMenu = this.toggleMenu.bind(this);
-        this.toggleDataPopup = this.toggleDataPopup.bind(this);
-        this.deleteSong = this.deleteSong.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
-    toggleMenu() {
-        this.setState({ showMenu: !this.showMenu });
-    }
-
-    toggleDataPopup() {
-        this.setState({ showDataPopup: !this.showDataPopup });
-    }
-
-    deleteSong() {
-        // Ensure that only the user who added the song can delete it
-        if (this.props.adminUser === this.props.currentUser) {
-            this.setState({ isDeleted: true });
-        } else {
-            alert("You are not authorized to delete this song.");
-        }
+    // Function to mark the song as deleted
+    handleDelete() {
+        this.setState({ isDeleted: true });
     }
 
     render() {
-        const { title, artist, link, dateAdded, adminUser } = this.props;
-        const { isDeleted, showMenu, showDataPopup } = this.state;
+        const { name, artist, url } = this.props;
+        const { isDeleted, timestamp } = this.state;
 
-        dateAdded = new Date(dateAdded).toLocaleDateString();
+        // Detect if the URL is a Spotify link
+        const isSpotify = url && url.includes('spotify.com/track');
 
+        // Display message if the song is deleted
         if (isDeleted) {
-            return <p>This song has been deleted.</p>;
+            return (
+                <div className="song deleted-song">
+                    <p>{name} by {artist} (Deleted)</p>
+                </div>
+            );
         }
 
         return (
-            <article className="song">
-                <iframe
-                    src={`https://open.spotify.com/embed/track/${link.split('/').pop().split('?')[0]}`}
-                    width="300"
-                    height="380"
-                    frameBorder="0"
-                    allow="encrypted-media"
-                    title="Spotify Player"
-                ></iframe>
-                <h3>{title}</h3>
-                <p>Artist: {artist} | Date Added: {dateAdded}</p>
-                <button onClick={this.toggleMenu}>. . .</button>
-                {showMenu && (
-                    <div className="menu">
-                        <AddToPlaylist songTitle={title} />
-                        <AddSongToFavourites songTitle={title} />
-                        <button onClick={this.toggleDataPopup}>View Song Data</button>
-                        {adminUser && <button onClick={this.deleteSong}>Delete Song</button>}
-                    </div>
+            <div className="song">
+                <h4>{name}</h4>
+                <p><strong>Artist:</strong> {artist}</p>
+                <p><strong>Added on:</strong> {new Date(timestamp).toLocaleString()}</p>
+
+                {/* Conditionally render the Spotify embed if the link is valid */}
+                {isSpotify ? (
+                    <iframe
+                        src={`https://open.spotify.com/embed/track/${url.split('track/')[1].split('?')[0]}`}
+                        width="300"
+                        height="80"
+                        frameBorder="0"
+                        allow="encrypted-media"
+                        title="Spotify Song Embed"
+                    ></iframe>
+                ) : (
+                    <p>Invalid or missing Spotify link</p>
                 )}
-                {showDataPopup && (
-                    <div className="popup">
-                        <h4>Song Data</h4>
-                        <p>Title: {title}</p>
-                        <p>Artist: {artist}</p>
-                        <p>Link: {link}</p>
-                        <p>Date Added: {dateAdded}</p>
-                        <p>Added by: {adminUser}</p>
-                        <button onClick={this.toggleDataPopup}>Close</button>
-                    </div>
-                )}
-            </article>
+
+                {/* Button to delete the song */}
+                <button onClick={this.handleDelete}>Delete Song</button>
+            </div>
         );
     }
 }

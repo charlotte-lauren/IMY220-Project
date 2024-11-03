@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../components/Header';
 
 class Landing extends React.Component {
     render() {
         return (
             <div className="landing-page">
-                <Header />
                 <header className="landing-header">
                     <h1>Welcome to Notefy</h1>
                     <p className="tagline">Sound Connections</p>

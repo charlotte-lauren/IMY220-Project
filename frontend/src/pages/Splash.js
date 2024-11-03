@@ -6,10 +6,8 @@ class Splash extends React.Component {
     render() {
         return (
             <div className="splash-page">
-                <header className="splash-header">
                     <h1>Notefy</h1>
                     <h2 className="tagline">Sound Connections</h2>
-                </header>
                 <main className="splash-content">
                     <section className="info-section">
                         <p>

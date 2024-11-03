@@ -1,6 +1,5 @@
 // Friends.js
 import React from 'react';
-import Header from '../components/Header';
 import Following from '../components/Following';
 import Followers from '../components/Followers';
 
@@ -23,7 +22,6 @@ class Friends extends React.Component {
 
         return (
             <div className="friends">
-                <Header />
                 <h2>Your Friends</h2>
                 <button onClick={this.toggleView} className="toggle-button">
                     {showFollowing ? 'Show Followers' : 'Show Following'}

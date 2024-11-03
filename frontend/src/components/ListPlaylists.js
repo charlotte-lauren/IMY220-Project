@@ -6,7 +6,7 @@ how you manage this functionality).
 import React from 'react';
 import PreviewPlaylist from './PreviewPlaylist'; // Assuming you have a PlaylistPreview component to display individual playlists
 
-const ListPlaylists = ({ playlists, currentUser }) => {
+const ListPlaylists = ({ playlists = [], currentUser }) => {
     // Filter playlists to only include those created by the current user
     const userPlaylists = playlists.filter(playlist => playlist.createdBy === currentUser.id);
 
