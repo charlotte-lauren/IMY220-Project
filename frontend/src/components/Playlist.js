@@ -5,7 +5,7 @@ You would need to be able to list all of the songs (hint: song
  manage this functionality. */
  import React from 'react';
  import Song from './Song';
- import CommentsList from './CommentsList';
+ import CommentsList from './CommentList';
  
  class Playlist extends React.Component {
      static genres = ['Pop', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Metal', 'Electronic', 'Country'];

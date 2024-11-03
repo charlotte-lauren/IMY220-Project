@@ -53,8 +53,8 @@ class SignUp extends React.Component {
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
-                        name="username"
-                        id="username"
+                        name="newUsername"
+                        id="newUsername"
                         value={this.state.username}
                         onChange={this.handleInputChange}
                         required
@@ -86,8 +86,8 @@ class SignUp extends React.Component {
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
-                        name="password"
-                        id="password"
+                        name="newPassword"
+                        id="newPassword"
                         value={this.state.password}
                         onChange={this.handleInputChange}
                         required

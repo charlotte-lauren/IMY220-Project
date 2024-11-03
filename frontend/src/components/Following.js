@@ -4,7 +4,7 @@ one component that handles the display of both, or a separate component for
 each) */
 
 import React from 'react';
-import ProfilePreview from './ProfilePreview'; // Assuming you have a ProfilePreview component
+import PreviewProfile from './PreviewProfile'; // Assuming you have a ProfilePreview component
 
 const Following = ({ following }) => {
     return (
@@ -14,7 +14,7 @@ const Following = ({ following }) => {
                 <ul>
                     {following.map((user, index) => (
                         <li key={index}>
-                            <ProfilePreview {...user} /> {/* Pass the user object to the ProfilePreview component */}
+                            <PreviewProfile {...user} /> {/* Pass the user object to the ProfilePreview component */}
                         </li>
                     ))}
                 </ul>

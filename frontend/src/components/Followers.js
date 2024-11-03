@@ -4,7 +4,7 @@ one component that handles the display of both, or a separate component for
 each) */
 
 import React from 'react';
-import ProfilePreview from './ProfilePreview'; // Assuming you have a ProfilePreview component
+import PreviewProfile from './PreviewProfile'; // Assuming you have a ProfilePreview component
 
 const Followers = ({ followers }) => {
     return (

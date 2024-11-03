@@ -1,7 +1,7 @@
 //Song Component (contains all required information on a single song)
 import React from 'react';
 import AddToPlaylist from './AddToPlaylist'; 
-import AddToFavourites from './AddToFavourites'; 
+import AddSongToFavourites from './AddSongToFavourites'; 
 
 class Song extends React.Component {
     constructor(props) {

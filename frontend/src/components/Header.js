@@ -41,7 +41,6 @@ class Header extends React.Component {
                             <Link to="/home">Home</Link>
                             <Link to="/friends">Friends</Link>
                             <Link to="/song-library">Song Library</Link>
-                            <Link to="/notifications">Notifications</Link>
                             <Link to="/profile">Profile</Link>
                             <Link to="/playlist">Playlist</Link>
                         </ul>

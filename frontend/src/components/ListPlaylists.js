@@ -4,7 +4,7 @@ of the Feed component for this if done correctly, however it is up to you on
 how you manage this functionality).
  */
 import React from 'react';
-import PlaylistPreview from './PlaylistPreview'; // Assuming you have a PlaylistPreview component to display individual playlists
+import PreviewPlaylist from './PreviewPlaylist'; // Assuming you have a PlaylistPreview component to display individual playlists
 
 const ListPlaylists = ({ playlists, currentUser }) => {
     // Filter playlists to only include those created by the current user
@@ -17,7 +17,7 @@ const ListPlaylists = ({ playlists, currentUser }) => {
                 <ul>
                     {userPlaylists.map((playlist, index) => (
                         <li key={index}>
-                            <PlaylistPreview {...playlist} /> {/* Pass the playlist object to the PlaylistPreview component */}
+                            <PreviewPlaylist {...playlist} /> {/* Pass the playlist object to the PlaylistPreview component */}
                         </li>
                     ))}
                 </ul>
