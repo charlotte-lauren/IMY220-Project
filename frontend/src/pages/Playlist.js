@@ -1,5 +1,6 @@
 // Playlist.js
 import React from 'react';
+import Header from '../components/Header';
 import Playlists from '../components/Playlist';
 
 class Playlist extends React.Component {
@@ -41,6 +42,7 @@ class Playlist extends React.Component {
         const { playlists } = this.state;
         return (
             <div className="playlist">
+                <Header />
                 <h2>Your Playlists</h2>
                 <div className="playlist-grid">
                     {playlists.map((playlist, i) => (

@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../components/Header';
 import EditProfile from '../components/EditProfile';
 import ListPlaylists from '../components/ListPlaylists';
 import ListSongs from '../components/ListSongs';
@@ -53,6 +54,7 @@ class Profile extends React.Component {
 
         return (
             <div className="profile-page" onDrop={this.handleImageDrop} onDragOver={(e) => e.preventDefault()}>
+                <Header />
                 <header className="profile-header">
                     <h1>{userInfo.name}</h1>
                     <h2>@{userInfo.username}</h2>

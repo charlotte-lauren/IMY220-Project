@@ -38,10 +38,12 @@ class Header extends React.Component {
 
                     <div className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
                         <ul>
-                            <li><Link to="/profile">Profile</Link></li>
-                            <li><Link to="/playlists">Playlists</Link></li>
-                            <li><Link to="/songs">Songs</Link></li>
-                            {user && <li><Link to="/settings">Settings</Link></li>}
+                            <Link to="/home">Home</Link>
+                            <Link to="/friends">Friends</Link>
+                            <Link to="/song-library">Song Library</Link>
+                            <Link to="/notifications">Notifications</Link>
+                            <Link to="/profile">Profile</Link>
+                            <Link to="/playlist">Playlist</Link>
                         </ul>
                     </div>
 
