@@ -22,9 +22,9 @@ class App extends React.Component {
                         <Route path="/" element={<Splash />} />
                         <Route path="/landing" element={<Landing />} />
                         <Route path="/home" element={<Home />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/:id" element={<Profile />} />
                         <Route path="/friends" element={<Friends />} />
-                        <Route path="/playlist" element={<Playlist />} />
+                        <Route path="/playlist/:id" element={<Playlist />} />
                         <Route path="/song-library" element={<SongLibrary />} />
                     </Routes>
                 </div>
