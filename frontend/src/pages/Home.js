@@ -1,6 +1,7 @@
 import React from 'react';
 import SongFeed from '../components/SongFeed';
 import PlaylistFeed from '../components/PlaylistFeed';
+import Header from '../components/Header';
 
 class Home extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className="home-page">
+                    <Header />
                 <header className="home-header">
                     <h1>Welcome Back!</h1>
                     <h2 className="tagline">Your Musical Feed Awaits</h2>

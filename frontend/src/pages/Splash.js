@@ -1,11 +1,13 @@
 import React from 'react';
 import LogIn from '../components/LogIn';
 import SignUp from '../components/SignUp';
+import Header from '../components/Header';
 
 class Splash extends React.Component {
     render() {
         return (
             <div className="splash-page">
+                    <Header />
                     <h1>Notefy</h1>
                     <h2 className="tagline">Sound Connections</h2>
                 <main className="splash-content">

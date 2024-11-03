@@ -1,6 +1,7 @@
 // SongLibrary.js
 import React from 'react';
 import Song from '../components/Song';
+import Header from '../components/Header';
 
 class SongLibrary extends React.Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class SongLibrary extends React.Component {
         const { songs } = this.state;
         return (
             <div className="song-library">
+                    <Header />
                 <h2>Song Library</h2>
                 <div className="song-grid">
                     {songs.map((song, i) => (

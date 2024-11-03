@@ -4,6 +4,7 @@ of the Feed component for this if done correctly, however it is up to you on
 how you manage this functionality).
  */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PreviewPlaylist from './PreviewPlaylist'; // Assuming you have a PlaylistPreview component to display individual playlists
 
 const ListPlaylists = ({ playlists = [], currentUser }) => {
@@ -17,7 +18,7 @@ const ListPlaylists = ({ playlists = [], currentUser }) => {
                 <ul>
                     {userPlaylists.map((playlist, index) => (
                         <li key={index}>
-                            <PreviewPlaylist {...playlist} /> {/* Pass the playlist object to the PlaylistPreview component */}
+                            <Link to={`/playlist/${playlist.id}`}><PreviewPlaylist {...playlist} /></Link> {/* Pass the playlist object to the PlaylistPreview component */}
                         </li>
                     ))}
                 </ul>

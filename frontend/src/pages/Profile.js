@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from '../components/Header';
+import { useParams } from 'react-router-dom';
 
 import EditProfile from '../components/EditProfile';
 import ListPlaylists from '../components/ListPlaylists';
@@ -51,9 +53,11 @@ class Profile extends React.Component {
 
     render() {
         const { userInfo, editing, profileImage, isFriends } = this.state;
+        const { id } = useParams(); // Access the dynamic ID from the URL
 
         return (
             <div className="profile-page" onDrop={this.handleImageDrop} onDragOver={(e) => e.preventDefault()}>
+                    <Header />
                 <header className="profile-header">
                     <h1>{userInfo.name}</h1>
                     <h2>@{userInfo.username}</h2>
@@ -91,7 +95,7 @@ class Profile extends React.Component {
                 <section className="user-playlists">
                     <h3>Your Playlists</h3>
                     <ListPlaylists />
-                    <h3>Saved Playlists</h3>
+                    <h3>Your Songs</h3>
                     {/* Assuming another component to show saved playlists */}
                     <ListSongs />
                 </section>

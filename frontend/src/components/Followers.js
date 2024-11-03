@@ -14,7 +14,7 @@ const Followers = ({ followers = [] }) => {
                 <ul>
                     {followers.map((follower, index) => (
                         <li key={index}>
-                            <PreviewProfile {...follower} /> {/* Pass the follower object to the ProfilePreview component */}
+                            <Link to={`/profile/${userId}`}><PreviewProfile {...follower} /></Link> {/* Pass the follower object to the ProfilePreview component */}
                         </li>
                     ))}
                 </ul>

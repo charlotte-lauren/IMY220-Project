@@ -1,6 +1,8 @@
 // Playlist.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Playlists from '../components/Playlist';
+import Header from '../components/Header';
 
 class Playlist extends React.Component {
     constructor(props) {
@@ -41,11 +43,16 @@ class Playlist extends React.Component {
         const { playlists } = this.state;
         return (
             <div className="playlist">
+                <Header />
                 <h2>Your Playlists</h2>
                 <div className="playlist-grid">
-                    {playlists.map((playlist, i) => (
-                        <Playlists key ={i} playlist={playlist} />
-                    ))}
+                    <ul>
+                        {playlists.map((playlist, i) => (
+                            <li key={index}>
+                                <Link to={`/playlist/${playlist.id}`}><Playlists key={i} playlist={playlist} /></Link>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         );
