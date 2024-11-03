@@ -1,0 +1,9 @@
+name: docker-compose
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5500:5500"  # Port mapping for the backend
+    environment:
+      - PORT=5500  # Corrected environment variable syntax
