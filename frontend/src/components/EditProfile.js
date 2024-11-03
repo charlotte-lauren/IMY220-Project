@@ -1,18 +1,29 @@
 /**
  * Component to edit a profile (contains all the form information for editing the
-user’s profile)
+ * user’s profile)
  */
 import React from 'react';
 
 class EditProfile extends React.Component {
+    
+    static defaultProps = {
+        profileData: {
+            name: '',
+            username: '',
+            pronouns: '',
+            bio: '',
+            socialLinks: [{ platform: '', url: '' }],
+        },
+    };
+
     constructor(props) {
         super(props);
         this.state = {
-            name: this.props.profileData.name || '',
-            username: this.props.profileData.username || '',
-            pronouns: this.props.profileData.pronouns || '',
-            bio: this.props.profileData.bio || '',
-            socialLinks: this.props.profileData.socialLinks || [{ platform: '', url: '' }],
+            name: this.props.profileData.name,
+            username: this.props.profileData.username,
+            pronouns: this.props.profileData.pronouns,
+            bio: this.props.profileData.bio,
+            socialLinks: this.props.profileData.socialLinks,
         };
 
         this.handleChange = this.handleChange.bind(this);

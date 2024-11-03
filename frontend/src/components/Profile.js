@@ -1,7 +1,6 @@
-//Profile Component (contains basic profile information)
-
 import React from 'react';
-import DefaultProfileImage from './defaultProfileImage'; // Import a default profile image
+import DefaultProfileImage from './path/to/defaultProfileImage.png'; // Ensure this is a valid image path
+import PropTypes from 'prop-types';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -29,11 +28,11 @@ class Profile extends React.Component {
         return (
             <div className="profile">
                 <div className="profile-header">
-                    {profileImage ? (
-                        <img src={profileImage} alt="Profile" className="profile-image" />
-                    ) : (
-                        <img src={DefaultProfileImage()} alt="Default" className="profile-image" />
-                    )}
+                    <img
+                        src={profileImage || DefaultProfileImage}
+                        alt={profileImage ? 'Profile' : 'Default'}
+                        className="profile-image"
+                    />
                     <div className="profile-info">
                         <h2>{name}</h2>
                         <h3>@{username}</h3>
@@ -57,5 +56,21 @@ class Profile extends React.Component {
         );
     }
 }
+
+Profile.propTypes = {
+    profileData: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        pronouns: PropTypes.string,
+        bio: PropTypes.string,
+        socialLinks: PropTypes.arrayOf(
+            PropTypes.shape({
+                platform: PropTypes.string.isRequired,
+                url: PropTypes.string.isRequired,
+            })
+        ),
+        profileImage: PropTypes.string,
+    }),
+};
 
 export default Profile;

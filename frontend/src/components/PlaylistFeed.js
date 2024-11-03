@@ -1,40 +1,47 @@
-/**
- * Feed Component (displays the song / playlist preview components - this can
-be one component that handles the display of both feeds, or a separate
-component for each)
- */
-
-// PlaylistFeed.js
 import React, { useEffect, useState } from 'react';
-import PreviewPlaylist from './PreviewPlaylist'; // Assume PreviewPlaylist accepts playlist activity data as props
+import PreviewPlaylist from './PreviewPlaylist';
 
 function PlaylistFeed({ currentUser }) {
-  const [activities, setActivities] = useState([]);
+    const [activities, setActivities] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Fetch playlist activity for the current user's friends
-    const fetchPlaylistActivities = async () => {
-      try {
-        const response = await fetch(`/api/playlists/activities?user=${currentUser.id}`); // Replace with actual endpoint
-        const data = await response.json();
-        // Assuming data is an array of activity objects with date, sort in reverse chronological order
-        const sortedActivities = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setActivities(sortedActivities);
-      } catch (error) {
-        console.error('Error fetching playlist activities:', error);
-      }
-    };
-    
-    fetchPlaylistActivities();
-  }, [currentUser.id]);
+    useEffect(() => {
+        const fetchPlaylistActivities = async () => {
+            if (!currentUser || !currentUser.id) {
+                setLoading(false);
+                return;
+            }
 
-  return (
-    <div className="playlist-feed">
-      {activities.map((activity, i) => (
-        <PreviewPlaylist key={i} activityData={activity} />
-      ))}
-    </div>
-  );
+            try {
+                const response = await fetch(`/api/playlists/activities?user=${currentUser.id}`);
+                const data = await response.json();
+                const sortedActivities = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                setActivities(sortedActivities);
+            } catch (error) {
+                console.error('Error fetching playlist activities:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPlaylistActivities();
+    }, [currentUser]);
+
+    if (loading) {
+        return <div>Loading...</div>; // Optional loading state
+    }
+
+    if (!currentUser || !currentUser.id) {
+        return <div>No user data available</div>; // Handle missing user
+    }
+
+    return (
+        <div className="playlist-feed">
+            {activities.map((activity, i) => (
+                <PreviewPlaylist key={i} activityData={activity} />
+            ))}
+        </div>
+    );
 }
 
 export default PlaylistFeed;

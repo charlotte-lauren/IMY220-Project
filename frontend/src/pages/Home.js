@@ -33,7 +33,7 @@ class Home extends React.Component {
                     {this.state.showSongFeed ? (
                         <SongFeed />
                     ) : (
-                        <PlaylistFeed />
+                        <PlaylistFeed currentUser={this.state.currentUser} />
                     )}
                 </main>
             </div>

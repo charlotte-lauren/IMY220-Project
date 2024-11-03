@@ -1,13 +1,18 @@
 import React from 'react';
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
-
 import EditProfile from '../components/EditProfile';
 import ListPlaylists from '../components/ListPlaylists';
 import ListSongs from '../components/ListSongs';
 import Followers from '../components/Followers';
 import Following from '../components/Following';
 import defaultProfileImage from '../components/defaultProfileImage';
+
+const placeholderImages = [
+    'placeholder1.jpg',
+    'placeholder2.jpg',
+    'placeholder3.jpg', // Add paths to your actual placeholder images
+];
 
 class Profile extends React.Component {
     constructor(props) {
@@ -31,14 +36,26 @@ class Profile extends React.Component {
         };
         this.toggleEdit = this.toggleEdit.bind(this);
         this.handleImageDrop = this.handleImageDrop.bind(this);
+        this.fetchProfileData = this.fetchProfileData.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.fetchProfileData();
+    }
+
+    async fetchProfileData() {
         const { profileId } = this.props.params;
-    
         if (profileId) {
-            console.log(`Profile ID from URL: ${profileId}`);
-            // Fetch and display specific profile based on profileId
+            // Fetch user data and playlists based on profileId
+            // Set the state accordingly
+            console.log(`Fetching data for profile ID: ${profileId}`);
+            // Example fetch calls:
+            // const userResponse = await fetch(`/api/users/${profileId}`);
+            // const userData = await userResponse.json();
+            // this.setState({ userInfo: userData });
+            // const playlistsResponse = await fetch(`/api/users/${profileId}/playlists`);
+            // const playlistsData = await playlistsResponse.json();
+            // this.setState({ playlists: playlistsData });
         } else {
             console.log("Displaying default profile");
             // Display a default profile or prompt for selection
@@ -65,6 +82,7 @@ class Profile extends React.Component {
 
     render() {
         const { userInfo, editing, profileImage, isFriends } = this.state;
+        const displayImage = profileImage || defaultProfileImage[Math.floor(Math.random() * defaultProfileImage.length)];
 
         return (
             <div className="profile-page" onDrop={this.handleImageDrop} onDragOver={(e) => e.preventDefault()}>
@@ -72,7 +90,7 @@ class Profile extends React.Component {
                 <header className="profile-header">
                     <h1>{userInfo.name}</h1>
                     <h2>@{userInfo.username}</h2>
-                    <img src={profileImage || defaultProfileImage} alt="Profile" className="profile-image" />
+                    <img src={displayImage} alt="Profile" className="profile-image" />
                     <button onClick={this.toggleEdit}>{editing ? 'Cancel Editing' : 'Edit Profile'}</button>
                 </header>
                 {editing ? (
@@ -98,9 +116,7 @@ class Profile extends React.Component {
                     <Following />
                 </section>
                 <section className="user-playlists">
-                    <h3>Your Playlists</h3>
-                    <ListPlaylists />
-                    <h3>Your Songs</h3>
+                    <ListPlaylists playlists={this.state.playlists} />
                     <ListSongs />
                 </section>
             </div>
