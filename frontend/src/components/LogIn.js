@@ -11,6 +11,8 @@ class LogIn extends React.Component {
         this.state = {
             username: '',
             password: '',
+            error: '',
+            success: ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,22 +24,46 @@ class LogIn extends React.Component {
         this.setState({ [name]: value });
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        // Implement login functionality here
-        console.log('Logging in with:', this.state);
+        const { username, password } = this.state;
+
+        try {
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed. Please check your credentials.');
+            }
+
+            const userData = await response.json();
+            // Handle successful login (e.g., redirect, save user data, etc.)
+            console.log('Login successful:', userData);
+            this.setState({ success: 'Login successful!' });
+            // You can redirect the user or update the application state here
+
+        } catch (error) {
+            this.setState({ error: error.message });
+        }
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="login-form">
                 <h2>Login</h2>
+                {this.state.error && <p className="error-message">{this.state.error}</p>}
+                {this.state.success && <p className="success-message">{this.state.success}</p>}
                 <div>
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
-                        name="username"
-                        id="username"
+                        name="username1"
+                        id="username1"
                         value={this.state.username}
                         onChange={this.handleInputChange}
                         required
@@ -46,8 +72,8 @@ class LogIn extends React.Component {
                 <div>
                     <label htmlFor="password">Password:</label>
                     <input
-                        type="password"
-                        name="password"
+                        type="password1"
+                        name="password1"
                         id="password"
                         value={this.state.password}
                         onChange={this.handleInputChange}

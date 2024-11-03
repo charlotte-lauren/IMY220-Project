@@ -1,9 +1,4 @@
-/*
-Sign up Form (contains all the information required / inputs to sign up, the
-sign up functionality does not need to be implemented yet)
-*/
-
-// SignUpForm.js
+// frontend/src/components/SignUp.js
 
 import React from 'react';
 
@@ -17,6 +12,8 @@ class SignUp extends React.Component {
             confirmPassword: '',
             name: '',
             dateOfBirth: '',
+            error: '',
+            success: ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -25,19 +22,60 @@ class SignUp extends React.Component {
 
     handleInputChange(event) {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
+        this.setState({ [name]: value, error: '', success: '' });
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        // Implement sign up functionality here
-        console.log('Signing up with:', this.state);
+        const { username, email, password, confirmPassword, name, dateOfBirth } = this.state;
+
+        if (password !== confirmPassword) {
+            this.setState({ error: 'Passwords do not match.' });
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password, name, dateOfBirth }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Sign up failed. Please try again.');
+            }
+
+            const userData = await response.json();
+            this.setState({ success: 'Sign up successful! Please log in.' });
+            this.resetForm();
+
+        } catch (error) {
+            this.setState({ error: error.message });
+        }
+    }
+
+    resetForm() {
+        this.setState({
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            name: '',
+            dateOfBirth: '',
+            error: '',
+            success: ''
+        });
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="signup-form">
                 <h2>Sign Up</h2>
+                {this.state.error && <p className="error-message">{this.state.error}</p>}
+                {this.state.success && <p className="success-message">{this.state.success}</p>}
                 <div>
                     <label htmlFor="name">Name:</label>
                     <input
@@ -53,8 +91,8 @@ class SignUp extends React.Component {
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
-                        name="newUsername"
-                        id="newUsername"
+                        name="username"
+                        id="username"
                         value={this.state.username}
                         onChange={this.handleInputChange}
                         required
@@ -79,15 +117,14 @@ class SignUp extends React.Component {
                         id="dateOfBirth"
                         value={this.state.dateOfBirth}
                         onChange={this.handleInputChange}
-                        required
                     />
                 </div>
                 <div>
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
-                        name="newPassword"
-                        id="newPassword"
+                        name="password"
+                        id="password"
                         value={this.state.password}
                         onChange={this.handleInputChange}
                         required
