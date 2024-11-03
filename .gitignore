@@ -11,7 +11,6 @@ build/
 .temp/
 
 # Compiled JavaScript files
-*.js
 *.js.map
 *.jsx
 *.jsx.map

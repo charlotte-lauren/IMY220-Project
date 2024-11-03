@@ -1,0 +1,1 @@
+// adds song to a list of favourited songs
