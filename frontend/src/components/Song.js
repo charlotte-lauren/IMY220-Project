@@ -27,7 +27,12 @@ class Song extends React.Component {
     }
 
     deleteSong() {
-        this.setState({ isDeleted: true });
+        // Ensure that only the user who added the song can delete it
+        if (this.props.adminUser === this.props.currentUser) {
+            this.setState({ isDeleted: true });
+        } else {
+            alert("You are not authorized to delete this song.");
+        }
     }
 
     render() {
@@ -56,7 +61,7 @@ class Song extends React.Component {
                 {showMenu && (
                     <div className="menu">
                         <AddToPlaylist songTitle={title} />
-                        <AddToFavourites songTitle={title} />
+                        <AddSongToFavourites songTitle={title} />
                         <button onClick={this.toggleDataPopup}>View Song Data</button>
                         {adminUser && <button onClick={this.deleteSong}>Delete Song</button>}
                     </div>
