@@ -1,29 +1,22 @@
 // /backend/server.js
 import express from 'express';
 import mongoose from 'mongoose';
-import userRoutes from './routes/userRoutes.js'; // Adjust the path if necessary
-import cors from 'cors';
+import userRoutes from './routes/userRoutes.js'; // Ensure the correct path for userRoutes
 
 const app = express();
 const PORT = process.env.PORT || 5500;
 
 // Middleware
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json()); // To parse JSON request bodies
 
-// Database connection (adjust the connection string as necessary)
-mongoose.connect('mongodb://localhost:27017/notefy', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
+// MongoDB connection
+const CONNECTION_STRING = 'mongodb+srv://u21434965:9FjUKrZdolCx768d@imy220.zs7mz.mongodb.net/?retryWrites=true&w=majority&appName=IMY220';
+mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
-app.use('/api/users', userRoutes); // User routes
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
+app.use('/api/users', userRoutes);
 
 // Start the server
 app.listen(PORT, () => {
