@@ -7,16 +7,16 @@ import ListPlaylists from '../components/ListPlaylists';
 import ListSongs from '../components/ListSongs';
 import Followers from '../components/Followers';
 import Following from '../components/Following';
-import defaultProfileImage from '../components/defaultProfileImage'; // Import placeholder image
+import defaultProfileImage from '../components/defaultProfileImage';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             editing: false,
-            profileImage: null, // Placeholder for user's profile image
+            profileImage: null,
             userInfo: {
-                name: 'John Doe', // Example user info
+                name: 'John Doe',
                 username: 'johndoe',
                 pronouns: 'he/him',
                 bio: 'Music lover and playlist curator.',
@@ -25,12 +25,24 @@ class Profile extends React.Component {
                     twitter: 'https://twitter.com/johndoe',
                 },
             },
-            playlists: [], // To store user's playlists
-            friends: [], // To store user's friends
-            isFriends: true, // Example state to check friendship status
+            playlists: [],
+            friends: [],
+            isFriends: true,
         };
         this.toggleEdit = this.toggleEdit.bind(this);
         this.handleImageDrop = this.handleImageDrop.bind(this);
+    }
+
+    componentDidMount() {
+        const { profileId } = this.props.params;
+    
+        if (profileId) {
+            console.log(`Profile ID from URL: ${profileId}`);
+            // Fetch and display specific profile based on profileId
+        } else {
+            console.log("Displaying default profile");
+            // Display a default profile or prompt for selection
+        }
     }
 
     toggleEdit() {
@@ -41,7 +53,7 @@ class Profile extends React.Component {
 
     handleImageDrop(event) {
         event.preventDefault();
-        const file = event.dataTransfer.files[0]; // Getting the dropped file
+        const file = event.dataTransfer.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -53,22 +65,15 @@ class Profile extends React.Component {
 
     render() {
         const { userInfo, editing, profileImage, isFriends } = this.state;
-        const { id } = useParams(); // Access the dynamic ID from the URL
 
         return (
             <div className="profile-page" onDrop={this.handleImageDrop} onDragOver={(e) => e.preventDefault()}>
-                    <Header />
+                <Header />
                 <header className="profile-header">
                     <h1>{userInfo.name}</h1>
                     <h2>@{userInfo.username}</h2>
-                    <img
-                        src={profileImage || defaultProfileImage}
-                        alt="Profile"
-                        className="profile-image"
-                    />
-                    <button onClick={this.toggleEdit}>
-                        {editing ? 'Cancel Editing' : 'Edit Profile'}
-                    </button>
+                    <img src={profileImage || defaultProfileImage} alt="Profile" className="profile-image" />
+                    <button onClick={this.toggleEdit}>{editing ? 'Cancel Editing' : 'Edit Profile'}</button>
                 </header>
                 {editing ? (
                     <EditProfile userInfo={userInfo} />
@@ -96,7 +101,6 @@ class Profile extends React.Component {
                     <h3>Your Playlists</h3>
                     <ListPlaylists />
                     <h3>Your Songs</h3>
-                    {/* Assuming another component to show saved playlists */}
                     <ListSongs />
                 </section>
             </div>
@@ -104,4 +108,8 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+function WithProfileProps(Component) {
+    return (props) => <Component {...props} params={useParams()} />;
+}
+
+export default WithProfileProps(Profile);

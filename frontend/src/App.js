@@ -24,7 +24,11 @@ const router = createBrowserRouter([
         element: <Home />
     },
     {
-        path: "/profile/:id",
+        path: "/profile",
+        element: <Profile /> // Add default profile route
+    },
+    {
+        path: "/profile/:profileId",
         element: <Profile />
     },
     {
@@ -32,7 +36,11 @@ const router = createBrowserRouter([
         element: <Friends />
     },
     {
-        path: "/playlist/:id",
+        path: "/playlist",
+        element: <Playlist /> // Add default playlist route
+    },
+    {
+        path: "/playlist/:playlistId",
         element: <Playlist />
     },
     {
